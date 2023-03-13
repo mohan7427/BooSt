@@ -1,2 +1,2 @@
 # BoSS
-Tools for benchmarking of Storage system
+Tool for benchmarking of Storage system
