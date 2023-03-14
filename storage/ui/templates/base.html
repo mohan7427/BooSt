@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Kubernetes Resiliency</title>
+
+{% load static %}
+{% load bootstrap_icons %}
+<link rel="stylesheet" href="{% static 'css/raas_w3.css' %}">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<link rel="shortcut icon" type="image/png" href="{% static 'css/images/orange_icon.JPG' %}"/>
+
+<style>
+.img_icon{
+        position: relative;
+        height: 60px;
+        width: 60px;
+</style>
+
+<body style="font-family: 'Helvetica 75 Bold'; margin: 0">
+  <!-- Navbar Vertical -->
+  <div class="sidenav">
+    <br>
+    <button class="dropdown-btn nav_bar_margin" >
+      <a style="font-family: 'Helvetica 75 Bold'; margin: 0" href="/cluster-management/" >
+      <i class={% bs_icon 'boxes' size='1.4em' %}Clusters
+      </a>
+    </button>
+
+    <a target="_blank" style="margin-bottom: 50px; width: 12%;" class="nav_bottom" href="https://docs.litmuschaos.io/">
+      <i class={% bs_icon 'folder' size='1.2em' %}Document
+      </a>
+  </div>
+</body>
+
+<body class="raas_theme">
+  <!-- Navbar Horizontal-->
+  <div class="top_raas" >
+    <div class="w3-bar raas_black raas_left-align raas_large" >
+    <a class="raas_bar_item raas_button raas_hide_medium raas_hide_large raas_right raas_padding_large raas_hover_white raas_large raas_theme_d2" href="javascript:void(0);" onclick="openNav()"><i class="raas_fa raas_bars"></i></a>
+    <a href="/"><img src="{% static 'css/images/orange_icon.JPG' %}" class="img_icon w3-bar-item " style="left:0px; top: 0px; margin-left: 30px; margin-right: 30px"><class="raas_circle" style="height:23px;width:23px; width:100%; border: none;" alt="Avatar"></a>
+    <a href="mailto:nilesh.gupta@orange.com" class="w3-bar-item raas_button raas_padding_large raas_hover_white" title="Messages" style="visibility: hidden"><i class={% bs_icon 'envelope' size='1.4em' %}</i></a>
+  <a href="/admin" target="_blank" class="w3-bar-item raas_button raas_right raas_padding_large raas_hover_white" title="My Account"<i class={% bs_icon 'person-circle' size='1.4em' %}</i>
+  </a>
+  <a href="https://slack.litmuschaos.io/" target="_blank" class="w3-bar-item raas_button raas_right raas_padding_large raas_hover_white" title="Help"<i class={% bs_icon 'question-circle-fill' size='1.4em' %}</i>
+  <a></a>
+  </div>
+</div>
+<br><br>
+
+
+{% block body %} {%endblock body %}
+{% block home %} {%endblock home %}
+{% block cluster_management %} {% endblock cluster_management %}
+{% block Ocalif1 %} {%endblock Ocalif1 %}
+{% block logs %} {%endblock logs %}
+{% block graph2 %} {%endblock graph2 %}
+{% block job_execution %} {%endblock job_execution %}
+
+</body>
+</html>

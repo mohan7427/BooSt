@@ -1,0 +1,1442 @@
+{% extends 'base.html' %}
+{% block job_execution %}
+{% load bootstrap_icons %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="refresh" content="12000">
+  <title>Kubernetes Resiliency</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/w3.css' %}">
+<link rel="stylesheet" href="{% static 'css/w3-theme-blue-grey.css' %}">
+<link rel="stylesheet" href="{% static 'css/font_google_api.css' %}">
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/pop_up.css' %}">
+<link rel="stylesheet" href="{% static 'css/sort_table.css' %}">
+<link rel="stylesheet" href="{% static 'css/cluster_test1.css' %}">
+<link rel="shortcut icon" type="image/png" href="{% static 'css/images/orange_icon.JPG' %}"/>
+<link rel="stylesheet" href="{% static 'css/play.css' %}">
+
+<body class=nav_bar>
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<script>
+
+//* Dropdown button javascript */
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
+
+for (i = 0; i < dropdown.length; i++) {
+  dropdown[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var dropdownContent = this.nextElementSibling;
+    if (dropdownContent.style.display === "block") {
+      dropdownContent.style.display = "none";
+    } else {
+      dropdownContent.style.display = "block";
+    }
+  });
+}
+
+</script>
+
+
+<style>
+.tst1 {
+  margin-left: -18px;
+}
+.tst2 {
+  margin-top: -20px;
+  margin-right: 1150px;
+}
+.tst3 {
+  margin-top: -18px;
+  margin-right: 100px;
+}
+
+.tst4 {
+  margin-top: 8px;
+  margin-right: 100px;
+}
+
+.rel1 {
+  position: relative;
+  left: 1000px;
+  display:inline;
+}
+
+.rel2 {
+  position: relative;
+  left: 90px;
+  display:inline;
+}
+
+nav {
+        float: left;
+}
+
+div.relative_left {
+  position: relative;
+  left: 230px;
+  display:inline;
+}
+div.relative_right {
+  position: relative;
+  left: 1300px;
+  display:inline;
+}
+h1.relative {
+  position: relative;
+  left: 230px;
+}
+h1.relative_left {
+  position: relative;
+  left: 230px;
+  font-family: 'Helvetica 75 Bold';
+  font-size: 35pt;
+}
+
+</style>
+
+<a></a>
+</body>
+
+<body class="w3-theme-l5">
+
+
+<br><br>
+<h1 class="relative_left" style="display:inline">JOB EXECUTION</h1>
+
+
+
+<button id="disBtn" onclick="document.getElementById('add_exp_form').style.display='block'" style="font-family: 'Helvetica 75 Bold'; width:auto; position: relative; left: 920px; display:inline" >Add Job</button>
+
+<br><br>
+
+<div id="add_exp_form" class="modal">
+
+
+
+<form action="{% url 'job_execution' %}" method="POST" id="add_exp_form" style="font-family: 'Helvetica 75 Bold';" enctype="multipart/form-data" name="theForm">
+        {% csrf_token %}
+
+        <h3><span style="padding-left: 20px;">Please select various parameters to Add Experiment</h3>
+  <br><br>
+
+  <label class="required" id="cluster_list" for="otherField2">SELECT CLUSTER</label>
+    <select style="width: 15em; height: 2em; margin-left: 155px;" class="cluster_subclass" id="cluster_name" name=cluster_name>
+    {% for cluster in all_cluster_elements %}
+      <option>{{ cluster }}</option>
+    {% endfor %}
+
+
+    </select>
+    <br>
+
+  <div class="form-group" id="ns">
+    <br>
+    <label class="required" for="otherField2">SELECT NAMESPACE</label>
+    <select style="width: 15em; height: 2em; margin-left: 123px;" id=ns_name name=ns_name>
+    {% for cluster,ns in all_cluster_elements.items %}
+      {% for n,po in ns.items %}
+      <option class={{ cluster }}>{{ cluster }}-{{ n }}</option>
+      {% endfor %}
+    {% endfor %}
+
+    </select>
+
+
+
+    <br><br>
+    <label class="required" for="otherField2">SELECT POD</label>
+    <select style="width: 15em; height: 2em; margin-left: 207px;" id=pod_name name=pod_name>
+    {% for cluster,ns in all_cluster_elements.items %}
+          {% for n,p in ns.items %}
+            {% for po in p %}
+            <option class="{{cluster}} {{ cluster }}-{{ n }}">{{ po }}</option>
+            {% endfor %}
+          {% endfor %}
+        {% endfor %}
+    </select>
+
+   <br><br>
+
+
+    <label for="chaos_duration_label" class="required" >
+            CHAOS DURATION
+    </label>
+    <input min="0" style="margin-left: 153px; border:none; width: 200px;" type="number" id="chaos_duration" name="chaos_duration" required oninvalid="this.setCustomValidity('Enter Chaos Duration') " oninput="this.setCustomValidity('')" />(in seconds)
+    <p style="color:red;" class="error-message" id="chaos_dur_errors"></p>
+  <br>
+
+  <label for="chaos_interval_label" class="required" >
+            CHAOS INTERVAL
+    </label>
+    <input min="0" style="margin-left: 150px; border:none; width: 210px;" type="number" id="chaos_interval" name="chaos_interval" required oninvalid="this.setCustomValidity('Enter Chaos Interval') " oninput="this.setCustomValidity('')" />(in seconds)
+    <p style="color:red;" class="error-message" id="chaos_int_errors"></p>
+  <br>
+
+
+
+
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+
+
+   <label class="pod_label_class" id="pod_label" for="otherField2">POD LABELS</label>
+   <input style="width: 30em; margin-left: 206px; width: 390px;" type="text" id="pod_label_input" name="pod_label_input" placeholder="POD LABELS" >
+
+
+
+
+  </div>
+
+
+
+  <div class="pod_affected_class" id="pod_affected">
+    <label class="required" for="pod_affected">POD AFFECTED PERCENTAGE</label>
+    <input min="0" style="margin-left: 40px; border:none; width: 230px;" type="number" id="pod_affected_per" name="pod_affected_per" oninvalid="this.setCustomValidity('Enter Pod Affected Percentage') " oninput="this.setCustomValidity('')" />%
+    <p style="color:red;" class="error-message" id="pod_aff_errors"></p>
+  </div>
+  <br>
+
+
+  <div class="outlined" id="probe_list"> </div>
+
+
+
+
+
+  <div class="form-group">
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+
+
+<script>
+var closebtns = document.getElementsByClassName("close");
+var i;
+
+for (i = 0; i < closebtns.length; i++) {
+  closebtns[i].addEventListener("click", function() {
+    this.parentElement.style.display = 'none';
+  });
+}
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+    <br><br>
+
+    <div class="outlined">
+    <div class="appending_div "></div>
+    ADD_PROBE: <span class="fa fa-plus add"></span>
+
+    </div>
+    <br><br>
+
+  <button type="submit" id="submit_add_exp" class="btn btn-primary" onclick="exp_nameFunction(event)">Submit</button>
+</form>
+
+<script>
+
+function exp_nameFunction(e) {
+  e.preventDefault();
+
+  let text = '';
+  let chaos_msg = '';
+  let pod_aff_msg = '';
+  let latency_msg = '';
+  let node_aff_msg = '';
+  let x = document.getElementsByName("name_exp")[0].value;
+  let chaos_dur = document.getElementsByName("chaos_duration")[0].value;
+  let exp_scope = document.getElementsByName("exp_scope")[0].value;
+  let pod_aff_per = document.getElementsByName("pod_affected_per")[0].value;
+  let node_aff_per = document.getElementsByName("node_affected_per")[0].value;
+  //let listNames = ["john", "sid", "paul", "jim"];
+  let listNames_without_tolower = {{ exp_list|safe }};
+  const listNames = [];
+  for (const element of listNames_without_tolower) {
+    listNames.push(element.toLowerCase());
+  }
+
+
+  if ( listNames.includes(x.toLowerCase()) ) {
+    text = 'Experiment Name '+ x + ' already exists!!!';
+  }
+  if (x === '' ||  x == null) {
+    text = "Experiment Name cannot be blank";
+  }
+
+  if (text.length > 0) {
+    document.getElementById("experiment_name_errors").innerHTML = text;
+    return false;
+  }
+  else {
+    document.getElementById("experiment_name_errors").innerHTML = '';
+  }
+
+  if (chaos_dur == '' ||  chaos_dur == null) {
+    document.getElementById("chaos_dur_errors").innerHTML = 'CHAOS DURATION cannot be blank';
+    return false;
+  }
+  else {
+    document.getElementById("chaos_dur_errors").innerHTML = '';
+  }
+
+  if ( exp_scope == 'pod' ) {
+    if ( pod_aff_per == '' ||  pod_aff_per == null) {
+      document.getElementById("pod_aff_errors").innerHTML = 'POD AFFECTED % cannot be blank';
+      return false;
+    }
+    else {
+      document.getElementById("pod_aff_errors").innerHTML = '';
+    }
+  }
+  else {
+    if ( node_aff_per == '' ||  node_aff_per == null) {
+      document.getElementById("node_aff_errors").innerHTML = 'NODE AFFECTED % cannot be blank';
+      return false;
+    }
+    else {
+      document.getElementById("node_aff_errors").innerHTML = '';
+    }
+  }
+
+
+
+
+  if (text == '' && chaos_msg == '' && pod_aff_msg == '' && node_aff_msg == '' && latency_msg == '') {
+  //              return true;
+  // trigger Submit programmatically
+  document.theForm.submit();
+  //document.getElementById("add_exp_form").submit();
+  //console.log('trigger submit')
+  }
+}
+
+document.addEventListener('invalid', (function () {
+  return function (e) {
+    e.preventDefault();
+
+    document.getElementsByName("name").focus();
+
+  };
+})(), true);
+</script>
+
+
+<script>
+
+function validacija() {
+  //var listNames = '{{ experiment_name_t|escapejs }}';
+  var user = document.getElementById('id_name');
+  //user = user.toLowerCase();
+  //let listNames = document.getElementById('get_exp_list');
+  //listNames = "{{ exp_list }}";
+  let listNames = {{ exp_list|safe }};
+  //let listNames = ["Tilen","Marko","Teja","Tisa","Rok","Luka","Mojca"];
+  //let listNames = ['experiment1', 'experiment1', 'experiment1', 'experiment1', 'experiment1', 'experiment1', 'experiment', 'exp', 'experiment1', 'exp', 'tilen']
+
+
+
+  if (user.value.length <= 20 && user.value.length >= 3) {} else {
+    alert("Experiment Name has to be between 3-20 characters.");
+    return false;
+  }
+
+
+  for (let i = 0; i < listNames.length; i++) {
+    if (listNames[i] == user.value) {
+      alert('Experiment name already exists!!!');
+      return false;
+    }
+
+  }
+
+  document.getElementById("submit_add_exp").addEventListener("click", validacija)
+
+  // trigger Submit programmatically
+  //document.getElementById("add_exp_form").submit();
+  //console.log('trigger submit')
+}
+
+</script>
+
+<style>
+
+form {
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
+
+.nj-theme-dark {color:#fff !important; background-color:#000000 !important}
+.nj-theme-d4 {color:#fff !important; background-color:#FFA500 !important}
+.tab {
+        tab-size: 2;
+    }
+
+.tab2 {
+        tab-size: 12;
+    }
+
+/* The popup form - hidden by default */
+.form-popup3 {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+
+/* For Add cluster css */
+
+{box-sizing: border-box;}
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+</style>
+
+<script>
+
+$("#EXPERIMENT_SCOPE").change(function() {
+                        if ($(this).val() == "node") {
+                                $('#node').show();
+                                $('#node_list').attr('required','');
+                                $('#node_list').attr('data-error', 'This field is required.');
+                                $('#experiment_name_node').show();
+                                $('#experiment_name_node').attr('required','');
+                                $('#experiment_name_node').attr('data-error', 'This field is required.');
+                                $('#node_affected').show();
+                                $('#node_affected_per').attr('required','');
+                                $('#node_affected_per').attr('data-error', 'This field is required.');
+                                $('#pod').hide();
+                                $('#pod_list').removeAttr('required');
+                                $('#pod_list').removeAttr('data-error');
+                                $('#experiment_name_pod').hide();
+                                $('#experiment_name_pod').removeAttr('required');
+                                $('#experiment_name_pod').removeAttr('data-error');
+                                $('#pod_affected').hide();
+                                $('#pod_affected_per').removeAttr('required');
+                                $('#pod_affected_per').removeAttr('data-error');
+                                $('#node_label_input').show();
+                                $('#pod_label_input').removeAttr('required');
+                                $('#pod_label_input').removeAttr('data-error');
+                        } else if ($(this).val() == "pod") {
+                                $('#pod').show();
+                                $('#pod_list').attr('required','');
+                                $('#pod_list').attr('data-error', 'This field is required.');
+                                $('#experiment_name_pod').show();
+                                $('#experiment_name_pod').attr('required','');
+                                $('#experiment_name_pod').attr('data-error', 'This field is required.');
+                                $('#pod_affected').show();
+                                $('#pod_affected_per').attr('required','');
+                                $('#pod_affected_per').attr('data-error', 'This field is required.');
+                                $('#node').hide();
+                                $('#node_list').removeAttr('required');
+                                $('#node_list').removeAttr('data-error');
+                                $('#experiment_name_node').hide();
+                                $('#experiment_name_node').removeAttr('required');
+                                $('#experiment_name_node').removeAttr('data-error');
+                                $('#node_affected').hide();
+                                $('#node_affected_per').removeAttr('required');
+                                $('#node_affected_per').removeAttr('data-error');
+                                $('#node_label_input').hide();
+                                $('#node_label_input').removeAttr('required');
+                                $('#node_label_input').removeAttr('data-error');
+                        }
+                });
+                $("#EXPERIMENT_SCOPE").trigger("change");
+
+$("#experiment_name_pod_list").change(function() {
+                        if ($(this).val() == "pod-network-latency") {
+                                $('#latency').show();
+                                $('#latency_per').attr('required','');
+                                $('#node_list').attr('data-error', 'This field is required.');
+                        } else {
+                                $('#latency').hide();
+                                $('#latency_per').removeAttr('required');
+                                $('#latency_per').removeAttr('data-error');
+                        }
+                });
+                $("#experiment_name_pod_list").trigger("change");
+
+
+$("#probe_option").change(function() {
+                        if ($(this).val() == "True") {
+                                $('#probes').show();
+                                $('#probe_no').attr('required','');
+                                $('#probe_no').attr('data-error', 'This field is required.');
+                        } else {
+                                $('#probes').hide();
+                                $('#probe_no').removeAttr('required');
+                                $('#probe_no').removeAttr('data-error');
+                        }
+                });
+                $("#probe_option").trigger("change");
+
+
+
+var ns_name = $("[name=ns_name] option").detach()
+$("[name=cluster_name]").change(function() {
+  var val = $(this).val()
+  $("[name=ns_name] option").detach()
+  ns_name.filter("." + val).clone().appendTo("[name=ns_name]")
+}).change()
+
+
+var pod_name = $("[name=pod_name] option").detach()
+$("[name=ns_name]").change(function() {
+  var val = $(this).val()
+  $("[name=pod_name] option").detach()
+  pod_name.filter("." + val).clone().appendTo("[name=pod_name]")
+}).change()
+
+function createNewElements() {
+      var numquestions = document.getElementById("probe_no").value;
+      var numofquestions = parseInt(numquestions)
+
+      var questionAnswerHTML = "";
+      for (var i = 0; i < numofquestions; i++) {
+         questionAnswerHTML += `
+            <div class="outlined" id="probe_list"> <span class="close">x</span>  </div>
+            <label for="Probe${i}">
+               Probe: ${i+1}
+            </label>
+            <br />
+
+            <span style="padding-left: 30px;"> Mode: <span style="padding-left: 20px;"> <select class="tab" id="probe_option${i}" name="probe_option${i}">
+             <optgroup label="Type">
+              <option value="SOT">SOT</option>
+              <option value="OnChaos">OnChaos</option>
+              <option value="EOT">EOT</option>
+             </optgroup>
+            </select>
+
+            <span style="padding-left: 30px;"> Probe Name: <span style="padding-left: 20px;"> <select class="tab" id="probe_name${i}" name="probe_name${i}">
+              <option value="SOT">Create VM</option>
+              <option value="OnChaos">Check VM Ping</option>
+              <option value="EOT">Resource Cleanup</option>
+            </select>
+
+            <p></p>
+
+            <span style="padding-left: 30px;"> Probe_Initial_Delay: <span style="padding-left: 20px;">
+            <input type="number" id="probe_initial_delay${i}" name="probe_initial_delay${i}" />
+
+            <span style="padding-left: 30px;"> Probe_Interval: <span style="padding-left: 70px;">
+            <input type="number" id="probe_interval${i}" name="probe_interval${i}" />
+
+            <p></p>
+
+            <span style="padding-left: 30px;"> Probe_Timeout: <span style="padding-left: 45px;">
+            <input type="number" id="probe_timeout${i}" name="probe_timeout${i}" />
+
+            <span style="padding-left: 30px;"> Probe_Polling_Interval: <span style="padding-left: 20px;">
+            <input type="number" id="probe_polling_interval${i}" name="probe_polling_interval${i}" />
+
+            <p></p><p></p>
+
+
+
+           <br /><br />
+
+
+
+
+       `;
+      }
+   document.getElementById("probe_list").innerHTML = questionAnswerHTML;
+}
+
+
+// Get all elements with class="close"
+var closebtns = document.getElementsByClassName("close");
+var i;
+
+// Loop through the elements, and hide the parent, when clicked on
+for (i = 0; i < closebtns.length; i++) {
+  closebtns[i].addEventListener("click", function() {
+    this.parentElement.style.display = 'none';
+  });
+}
+
+
+
+
+$(document).ready(function() {
+var i= 1;
+  $('.add').on('click', function() {
+                         var field = '<br><div class="probe_border"><label>Probe '+i+'</label><div class="Probes_'+i+'" id="Probes_'+i+'" name="Probes_'+i+'"><br><span style="padding-left: 20px;">Probe Name:<span style="padding-left: 0px;"><input class="input" type="text" id="Probe_'+i+'" name="Probe_'+i+'" required><br> <span style="padding-left: 0px; display:inline;"> Mode: <span style="padding-left: 0px; display:inline;"> <select style="margin-left: 80px; height: 2em; width: 10em;" class="tab" id="Probe_mode_'+i+'" name="Probe_mode_'+i+'"><option value="SOT">SOT</option><option value="OnChaos">OnChaos</option><option value="EOT">EOT</option><option value="Edge">Edge</option><option value="Continuous">Continuous</option></select>  <span style="display:inline; padding-left: 200px;" > Type: <span style="display:inline; padding-left: 0px;"> <select style="margin-left: 80px; height: 2em; width: 10em;" class="tab" id="Probe_type_'+i+'" name="Probe_type_'+i+'"><option value="httpProbe">httpProbe</option><option value="cmdProbe">cmdProbe</option><option value="k8sProbe">k8sProbe</option><option value="promProbe">promProbe</option></select> <br> <span style="padding-left: 0px;">Command:<span style="padding-left: 0px;"><input class="input" type="text" id="Probe_command_'+i+'" name="Probe_command_'+i+'"> <br> <span style="padding-left: 0px;">Image:<span style="padding-left: 0px;"><input class="input" type="text" id="Probe_image_'+i+'" name="Probe_image_'+i+'"> <br> <span style="display:inline; padding-left: 0px; "> Probe_Timeout: <input min="0" style="margin-left: 15px; border:none;" type="number" id="Probe_timeout_'+i+'" name="Probe_timeout_'+i+'" style="margin-left: 16px;" />seconds <strong><span style="display:inline; padding-left: 50px;" aria-label="required"></span></strong> <span style="display:inline; padding-left: 0px;"> <span style="padding-left: 160px; display:inline;"> Retry: <input min="0" style="margin-left: 70px; border:none;" type="number" id="Probe_retry_'+i+'" name="Probe_retry_'+i+'" />times <br><br> <span style="display:inline; padding-left: 0px;"> Interval <strong><span style="display:inline;" aria-label="required"></span></strong> <input min="0" style="margin-left: 76px; border:none;" type="number" id="Probe_interval_'+i+'" name="Probe_interval_'+i+'" />seconds <span style="display:inline; padding-left: 210px; "> Polling Interval <input min="0" style="margin-left: 8px; border:none;" type="number" id="Probe_polling_interval_'+i+'" name="Probe_polling_interval_'+i+'" />seconds <br><br><span style="display:inline; padding-left: 0px;"> Probe Initial Delay <span style="display:inline; padding-left: 0px;"> <input min="0" style="margin-left: 0px; border:none;" type="number" id="Probe_initial_delay_'+i+'" name="Probe_initial_delay_'+i+'" />seconds <span style="display:inline; padding-left: 210px; "> Probe Delay <input min="0" style="margin-left: 30px; border:none;" type="number" id="Probe_delay_sec_'+i+'" name="Probe_delay_sec_'+i+'" />seconds <br><br> <span style="display:inline; padding-left: 0px;"> stopOnFailure<span style="display:inline; padding-left: 30px;"> <select style="display:inline; margin-left: 0px; height: 2em; width: 10em;" class="tab" id="Probe_stopOnFail_'+i+'" name="Probe_stopOnFail_'+i+'"><option value="True">True</option><option value="False">False</option></select> <span style="display:inline; padding-left: 200px;"> Insecure Skip Verify<span style="display:inline; padding-left: 0px;"> <select style="margin-left: 0px; height: 2em; width: 10em;" class="tab" id="Probe_insecure_ver_'+i+'" name="insecure_ver${i}"><option value="True">True</option><option value="False">False</option></select><br><br> <span style="padding-left: 0px;">URL:<strong><span aria-label="required"></span></strong><span style="padding-left: 0px;"><input class="input" type="text" name="Probe_url_'+i+'"> &nbsp;  <br><br><button del_id='+i+' class="delete">Delete</button> </div></div>';
+
+
+  $(document).on('click', '.delete', function () {
+                  $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().remove();
+    });
+
+
+
+    $('.appending_div').append(field);
+    i = i+1;
+  })
+})
+
+
+//* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
+
+for (i = 0; i < dropdown.length; i++) {
+  dropdown[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var dropdownContent = this.nextElementSibling;
+    if (dropdownContent.style.display === "block") {
+      dropdownContent.style.display = "none";
+    } else {
+      dropdownContent.style.display = "block";
+    }
+  });
+}
+
+
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+
+</script>
+
+
+</div>
+
+<script>
+
+
+cluster_status = document.getElementById("cluster_status").innerHTML;
+if (cluster_status == 'Connected'){
+    document.getElementById("color_cluster").innerHTML = "●";
+    document.getElementById("color_cluster").classList.add('stat_green');
+    }
+else{
+    document.getElementById("color_cluster").innerHTML = "●";
+    document.getElementById("color_cluster").classList.add('stat_red');
+  }
+
+litmus_status = document.getElementById("litmus_status").innerHTML;
+if (litmus_status == 'Running'){
+    document.getElementById("color_litmus").innerHTML = "●";
+    document.getElementById("color_litmus").classList.add('stat_green');
+
+    }
+else{
+    document.getElementById("color_litmus").innerHTML = "●";
+    document.getElementById("color_litmus").classList.add('stat_red');
+  }
+
+</script>
+
+<script>
+
+cluster_status = document.getElementById("cluster_status").innerHTML;
+if (cluster_status == 'Connected'){
+  document.getElementById("disBtn").enabled = true;
+  }
+else{
+  document.getElementById("disBtn").disabled = true;
+  document.getElementById("disBtn").classList.add('back_red');
+let x = 1;
+  }
+
+</script>
+
+
+<script>
+// Get the modal
+var modal = document.getElementById('add_exp_form');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)}
+  to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+  from {transform: scale(0)}
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+</style>
+
+
+
+<div id="id01" class="modal">
+
+  <form class="modal-content animate" action="/action_page.php" method="post" >
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+    </div>
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+
+      <button type="submit">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+  </form>
+</div>
+
+
+
+{% if upload_status_here %}
+  <h4 > {{ upload_status_here }} </h4>
+{% endif %}
+{% if litmus_status_here %}
+       <h4 > {{ litmus_status_here }} </h4>
+{% endif %}
+{% if litmus_logs %}
+    {% for i in litmus_logs %}
+       <h4 > {{ i }} </h4>
+    {% endfor %}
+{% endif %}
+</div>
+
+
+<style>
+label {
+  cursor: pointer;
+}
+
+textarea {
+  width: 400px;
+  height: 150px;
+}
+</style>
+
+
+<hr >
+
+  </head>
+  <body>
+  <div>
+    <div id="modalOne" class="modal relative">
+      <div class="modal-content">
+        <div class="contact-form">
+          <a class="close">&times;</a>
+          <form action="{% url 'job_execution' %}" method="POST" id="add_cluster_form" enctype="multipart/form-data" class="form-container">
+            {% csrf_token %}
+            <h2>Add New Kubernetes Cluster</h2>
+            <div>
+              <input class="fname" type="text" name="name" placeholder="Cluster name" />
+              <p style="color:red;" class="error-message" id="cluster_name_errors"></p>
+              <input type="file" id="input-file" name="config_file" required />
+              <p style="color:red;" class="error-message" id="cluster_file_errors"></p>
+
+            </div>
+            <button type="submit" href="/cluster-management/{{ clusters.id }}" name="submit_cluster" onclick="cluster_nameFunction(event);">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+<script>
+
+  var checkForm = function(form) { /* Submit button was clicked */
+
+    //
+    // check form input values
+    //
+
+    form.submit_cluster.disabled = true;
+    form.submit_cluster.value = "Adding Cluster...";
+    return true;
+  };
+
+</script>
+
+    <div id="modalTwo" class="modal">
+      <div class="modal-content">
+        <div class="contact-form">
+          <span class="close">&times;</span>
+          <form action="/">
+            <h2>Complaint form</h2>
+            <div>
+              <input class="fname" type="text" name="name" placeholder="Full name" />
+              <input type="text" name="name" placeholder="Email" />
+              <input type="text" name="name" placeholder="Phone number" />
+              <input type="text" name="name" placeholder="Website" />
+            </div>
+            <span>Message</span>
+            <div>
+              <textarea rows="4"></textarea>
+            </div>
+            <button type="submit" href="/">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script>
+      let modalBtns = [...document.querySelectorAll(".button")];
+      modalBtns.forEach(function (btn) {
+        btn.onclick = function () {
+          let modal = btn.getAttribute("data-modal");
+          document.getElementById(modal).style.display = "block";
+        };
+      });
+      let closeBtns = [...document.querySelectorAll(".close")];
+      closeBtns.forEach(function (btn) {
+        btn.onclick = function () {
+          let modal = btn.closest(".modal");
+          modal.style.display = "none";
+        };
+      });
+      window.onclick = function (event) {
+        if (event.target.className === "modal") {
+          event.target.style.display = "none";
+        }
+      };
+    </script>
+
+<script>
+
+function cluster_nameFunction(e) {
+  e.preventDefault();
+
+  let text = '';
+  let x = document.getElementsByName("name")[0].value;
+  //let listNames = ["john", "sid", "paul", "jim"];
+  let listNames = {{ name_list|safe }};
+  if ( listNames.includes(x.toLowerCase()) ) {
+    text = 'Cluster Name '+ x + ' already exists!!!';
+  }
+  if (x === '' ||  x == null) {
+    text = "Cluster Name cannot be blank";
+  }
+
+  if (text.length > 0) {
+    document.getElementById("cluster_name_errors").innerHTML = text;
+    return false;
+  }
+  else {
+    document.getElementById("cluster_name_errors").innerHTML = '';
+  }
+  // trigger Submit programmatically
+  if(document.getElementById("input-file").value != "") {
+    document.getElementById("add_cluster_form").submit();
+    console.log('trigger submit')
+  }
+  else{
+    document.getElementById("cluster_file_errors").innerHTML = "Please Upload Kubeconfig File";
+    return false;
+  }
+}
+
+document.addEventListener('invalid', (function () {
+  return function (e) {
+    e.preventDefault();
+
+    document.getElementsByName("name").focus();
+
+  };
+})(), true);
+</script>
+
+<style>
+table.center {
+  overflow: scroll;
+  margin-left: 15%;
+  white-space: nowrap;
+  width: 400%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  position: relative;
+
+
+}
+</style>
+
+<br>
+
+                <title>Epic Table </title>
+
+
+<!--  Search Box -->
+
+
+
+<script language="JavaScript">
+function toggle(source) {
+  checkboxes = document.getElementsByName('foo');
+  for(var checkbox in checkboxes)
+    checkbox.checked = source.checked;
+}
+</script>
+
+<!--  Table -->
+<div style="position: 'relative'; right: '15px'; width: '30'">
+
+<table id="le-Table-1" class="center" cellspacing="0">
+  <!--  Table Header -->
+        <thead>
+        <tr class="header">
+  <tr>
+   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->
+    <td class="bs-checkbox "><input type="checkbox" id="select-alls"></td>
+    <th onclick="sortTable(0)" style="font-size: 15pt;">Request ID</th>
+    <th onclick="sortTable(0)" style="font-size: 15pt;">Cluster Name</th>
+    <th onclick="sortTable(1)" style="font-size: 15pt;">Result</th>
+                <th onclick="sortTable(2)" style="font-size: 15pt;">Chaos Duration</th>
+                <th onclick="sortTable(4) "style="font-size: 15pt;">Connection Date</th>
+     <th onclick="sortTable(5)" style="font-size: 15pt;">Action</th>
+     <th onclick="sortTable(5)" style="font-size: 15pt;">Logs</th>
+  </tr>
+        </thead>
+  <!--  Table Body / Rows -->
+        <tbody>
+
+
+  {% for details in pod_delete_db %}
+        <tr class='clickable-row' data-href='#link'>
+    <td class="bs-checkbox "><input id="check_cluster3" value="check_cluster3" type="checkbox" name="cluster_check"></td>
+    <td><a href="/experiment_workflow/pod-delete/{{ details.request_id }}">{{ details.request_id }}</a></td>
+    <td><a href="/cluster-management/{{ clusters.id }}">{{ details.cluster_name }}</a></td>
+    <td>{{ details.historical_result }}<div style=" display:inline;"></div></td>
+                <td>{{ details.experiment_duration }}</td>
+                <td>{{ details.created_time }}</td>
+                <td>
+                        {% if details.cluster_name in inprogress_cluster_list %}
+                        <a class="play-btn-red" onclick="alert_inprogress('{{ details.cluster_name }}')"></a>
+                        {% else %}
+                          <a class="play-btn" href="/play_btn/{{ details.request_id }}/pod-delete"></a>
+                        {% endif %}
+                </td>
+                <td><a href="/logs/{{ details.request_id }}" target="_blank" class={% bs_icon 'file-earmark-medical' size='1.4em' %}</a></td>
+  </tr>
+
+  {% endfor %}
+
+
+        </tbody>
+
+
+
+</table>
+</div>
+
+<br><br>
+
+<div style="position: 'relative'; right: '15px'; width: '30'">
+<table class="table center" cellspacing="0">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+      <th scope="col">Handle2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+<script>
+function alert_inprogress(cluster_name) {
+                alert('Chaos already running on Cluster ' + cluster_name);
+}
+</script>
+
+<style>
+.menu-btn {
+   background-color: #ffffff;
+   color: black;
+   padding: 10px;
+   font-size: 15px;
+   font-weight: bolder;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   border: none;
+}
+.dropdown-menu {
+   position: relative;
+   display: inline-block;
+}
+.menu-content {
+   display: none;
+   position: absolute;
+   background-color: #017575;
+   border: none;
+   min-width: 100px;
+   z-index: 1;
+}
+.links {
+   color: black;
+   padding: 5px 5px;
+   text-decoration: none;
+   display: block;
+   font-size: 10px;
+   font-weight: bold;
+   background-color: #ffffff;
+}
+.links:hover {
+   background-color: #808080;
+}
+.dropdown-menu:hover .menu-btn {
+   background-color: #808080;
+}
+</style>
+
+<script>
+let dropdownBtn = document.querySelectorAll('.menu-btn');
+let menuContent = document.querySelectorAll('.menu-content');
+  for (let i = 0; i < dropdownBtn.length; i++) {
+    dropdownBtn[i].addEventListener('click',()=>{
+      if(menuContent[i].style.display===""){
+         menuContent[i].style.display="block";
+    } else {
+        menuContent[i].style.display="";
+    }
+})
+}
+
+</script>
+
+<script>
+
+var intervalId = window.setInterval(function(){
+  httpGet()
+}, 5000000);
+
+function httpGet()
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", "http://192.168.27.183:8003/cluster_refresh/11", false );
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+
+</script>
+
+
+<script>
+
+document.getElementById('input-file')
+  .addEventListener('change', getFile)
+
+function getFile(event) {
+        const input = event.target
+  if ('files' in input && input.files.length > 0) {
+          placeFileContent(
+      document.getElementById('content-target'),
+      input.files[0])
+  }
+}
+
+function placeFileContent(target, file) {
+        readFileContent(file).then(content => {
+        target.value = content
+  }).catch(error => console.log(error))
+}
+
+function readFileContent(file) {
+        const reader = new FileReader()
+  return new Promise((resolve, reject) => {
+    reader.onload = event => resolve(event.target.result)
+    reader.onerror = error => reject(error)
+    reader.readAsText(file)
+  })
+}
+</script>
+
+<script>
+        document.getElementById('select-alls').onclick = function() {
+    var checkboxes = document.getElementsByName('cluster_check');
+    for (var checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+    }
+}
+</script>
+
+
+
+<style>
+
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+
+html {
+  font-size: 20px;
+}
+body {
+  margin: 0;
+  padding: .25em;
+  font-family: 'Varela Round', sans-serif;
+  background: #eee;
+}
+#status {
+  margin-bottom: 1em;
+}
+.status {
+  background: #fff;
+  margin-bottom: .25em;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.status {
+  position: relative;
+  height: 1em;
+  line-height: 1em;
+  padding: .5em;
+  padding-left: 2em;
+  transition: color 500ms;
+}
+.status:before, .status:after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  transition: all 500ms;
+}
+.status.-Pending {
+  color: #666;
+}
+.status.-Pending:before, .status.-Pending:after {
+  background: #888;
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+.status.-Pending:before {
+  width: .25em;
+  height: .25em;
+  top: .5em;
+  left: .875em;
+  border-radius: .125em;
+  transform-origin: 50% .5em;
+}
+.status.-Pending:after {
+  width: .25em;
+  height: .25em;
+  top: 1.25em;
+  left: .875em;
+  border-radius: .125em;
+  transform-origin: 50% -.25em;
+}
+.status.-Connected {
+  color: #368;
+}
+.status.-Connected:before, .status.-Connected:after {
+  background: #6cf;
+  border-radius: .125em;
+}
+.status.-Connected:before {
+  width: .25em;
+  height: 1em;
+  top: .5em;
+  left: .875em;
+  transform-origin: 50% .875em;
+  transform: translate(-.177em, -.11em) rotate(.125turn);
+}
+.status.-Connected:after {
+  width: .25em;
+  height: .5em;
+  top: 1em;
+  left: .875em;
+  transform-origin: 50% .375em;
+  transform: translate(-.177em, -.11em) rotate(-.125turn);
+}
+.status.-UNKNOWN {
+  color: #802;
+}
+.status.-UNKNOWN:before, .status.-UNKNOWN:after {
+  background: #f04;
+  border-radius: .125em;
+}
+.status.-UNKNOWN:before {
+  width: .25em;
+  height: 1em;
+  top: .5em;
+  left: .875em;
+  transform: rotate(.125turn);
+}
+.status.-UNKNOWN:after {
+  width: .25em;
+  height: 1em;
+  top: .5em;
+  left: .875em;
+  transform: rotate(-.125turn);
+}
+
+</style>
+
+<script>
+
+let cnt = 0;
+
+setInterval(() => {
+  cnt = (cnt + 1) & 3;
+
+  if (cnt & 1) {
+    if (cnt & 2) {
+      $('#status')
+        .text('Failure')
+        .attr('class', 'status -UNKNOWN');
+    } else {
+      $('#status')
+        .text('Success')
+        .attr('class', 'status -Connected');
+    }
+  } else {
+    $('#status')
+      .text('Pending')
+      .attr('class', 'status -Pending');
+  }
+}, 3000);
+
+</script>
+
+
+
+  </body>
+</html>
+
+{% endblock job_execution %}
+
