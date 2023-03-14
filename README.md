@@ -1,2 +1,7 @@
-# BoSS
-BoSS is a tool which is used for benchmarking of Storage system.
+# Overview
+BooSt is a tool to measure the performance of different types of storage systems.
+
+This tool is very simple to use and 
+
+# Features: 
+# Architect
