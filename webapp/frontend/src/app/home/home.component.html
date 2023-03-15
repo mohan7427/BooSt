@@ -1,0 +1,77 @@
+ <div style="margin: 2vh">
+       <div class="card" style="margin-bottom: 4%; border: 2px solid black;">
+         <h3 class="card-header" style="background-color: black; color: white;">Job Management</h3>
+         <div class="card-body">
+             <div>
+             <h2 style="align-items: center; margin-bottom: 5vh;">Jobs <button type="button" class="btn btn-primary"  style="float: right;" (click)="openDialog()">
+               Add Jobs &nbsp;<mat-icon>account_box</mat-icon></button></h2>
+           
+             <div class="spinner-border text-primary" role="status" [hidden]="dataLoaded" ></div>
+             <div *ngIf=dataLoaded >
+        
+          
+            <table mat-table [dataSource]="data" class="mat-elevation-z8">
+    
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+          
+            <!-- Position Column -->
+            'POSITION','JOB NAME', 'I/O-ENGINE', 'DISKNAME','BLOCKSIZE','I/O-DEPTH','NUMJOBS','READ/WRITE','RUNTIME','RUN','DELETE'
+            <ng-container matColumnDef="POSITION">
+              <th mat-header-cell *matHeaderCellDef> No. </th>
+              <td mat-cell *matCellDef="let element"> {{element.POSITION}} </td>
+            </ng-container>
+          
+            <!-- Name Column -->
+            <ng-container matColumnDef="JOB NAME">
+              <th mat-header-cell *matHeaderCellDef> JOB Name </th>
+              <td mat-cell *matCellDef="let element"> {{element['JOB NAME']}} </td>
+            </ng-container>
+          
+            <!-- Weight Column -->
+            <ng-container matColumnDef="I/O-ENGINE">
+              <th mat-header-cell *matHeaderCellDef> I/O-ENGINE </th>
+              <td mat-cell *matCellDef="let element"> {{element['I/O-ENGINE']}} </td>
+            </ng-container>
+          
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="DISKNAME">
+              <th mat-header-cell *matHeaderCellDef> DISKNAME </th>
+              <td mat-cell *matCellDef="let element"> {{element.DISKNAME}} </td>
+            </ng-container>
+            <ng-container matColumnDef="BLOCKSIZE">
+                <th mat-header-cell *matHeaderCellDef> BLOCKSIZE </th>
+                <td mat-cell *matCellDef="let element"> {{element.BLOCKSIZE}} </td>
+            </ng-container>
+            <ng-container matColumnDef="I/O-DEPTH">
+                <th mat-header-cell *matHeaderCellDef> I/O-DEPTH </th>
+                <td mat-cell *matCellDef="let element"> {{element['I/O-DEPTH']}} </td>
+              </ng-container>
+              <ng-container matColumnDef="NUMJOBS">
+                <th mat-header-cell *matHeaderCellDef>NUMJOBS </th>
+                <td mat-cell *matCellDef="let element"> {{element.NUMJOBS}} </td>
+              </ng-container>
+              <ng-container matColumnDef="READ/WRITE">
+                <th mat-header-cell *matHeaderCellDef> READ/WRITE </th>
+                <td mat-cell *matCellDef="let element"> {{element['READ/WRITE']}} </td>
+              </ng-container>
+              <ng-container matColumnDef="RUNTIME">
+                <th mat-header-cell *matHeaderCellDef> RUNTIME </th>
+                <td mat-cell *matCellDef="let element"> {{element.RUNTIME}} </td>
+              </ng-container>
+              <ng-container matColumnDef="RUN">
+                <th mat-header-cell *matHeaderCellDef> RUN </th>
+                <td mat-cell *matCellDef="let element"><button mat-icon-button  ><mat-icon >{{element.RUN}}</mat-icon></button></td>
+              </ng-container>
+    
+              <ng-container matColumnDef="DELETE">
+                <th mat-header-cell *matHeaderCellDef> DELETE </th>
+                <td mat-cell *matCellDef="let element"><button mat-icon-button ><mat-icon >{{element.DELETE}}</mat-icon></button></td>
+              </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+      
+      </div>
+        </div>
