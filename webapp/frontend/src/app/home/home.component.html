@@ -16,48 +16,48 @@
                   The actual rendered columns are set as a property on the row definition" -->
           
             <!-- Position Column -->
-            'POSITION','JOB NAME', 'I/O-ENGINE', 'DISKNAME','BLOCKSIZE','I/O-DEPTH','NUMJOBS','READ/WRITE','RUNTIME','RUN','DELETE'
+            <!-- 'POSITION','JobName', 'IOEngine', 'DiskName','BlockSize','IODepth','NumJobs','ReadWrite','RunTime','RUN','DELETE' -->
             <ng-container matColumnDef="POSITION">
               <th mat-header-cell *matHeaderCellDef> No. </th>
               <td mat-cell *matCellDef="let element"> {{element.POSITION}} </td>
             </ng-container>
           
             <!-- Name Column -->
-            <ng-container matColumnDef="JOB NAME">
+            <ng-container matColumnDef="JobName">
               <th mat-header-cell *matHeaderCellDef> JOB Name </th>
-              <td mat-cell *matCellDef="let element"> {{element['JOB NAME']}} </td>
+              <td mat-cell *matCellDef="let element"> {{element['JobName']}} </td>
             </ng-container>
           
             <!-- Weight Column -->
-            <ng-container matColumnDef="I/O-ENGINE">
+            <ng-container matColumnDef="IOEngine">
               <th mat-header-cell *matHeaderCellDef> I/O-ENGINE </th>
-              <td mat-cell *matCellDef="let element"> {{element['I/O-ENGINE']}} </td>
+              <td mat-cell *matCellDef="let element"> {{element['IOEngine']}} </td>
             </ng-container>
           
             <!-- Symbol Column -->
-            <ng-container matColumnDef="DISKNAME">
+            <ng-container matColumnDef="DiskName">
               <th mat-header-cell *matHeaderCellDef> DISKNAME </th>
-              <td mat-cell *matCellDef="let element"> {{element.DISKNAME}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.DiskName}} </td>
             </ng-container>
-            <ng-container matColumnDef="BLOCKSIZE">
+            <ng-container matColumnDef="BlockSize">
                 <th mat-header-cell *matHeaderCellDef> BLOCKSIZE </th>
-                <td mat-cell *matCellDef="let element"> {{element.BLOCKSIZE}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.BlockSize}} </td>
             </ng-container>
-            <ng-container matColumnDef="I/O-DEPTH">
+            <ng-container matColumnDef="IODepth">
                 <th mat-header-cell *matHeaderCellDef> I/O-DEPTH </th>
-                <td mat-cell *matCellDef="let element"> {{element['I/O-DEPTH']}} </td>
+                <td mat-cell *matCellDef="let element"> {{element['IODepth']}} </td>
               </ng-container>
-              <ng-container matColumnDef="NUMJOBS">
+              <ng-container matColumnDef="NumJobs">
                 <th mat-header-cell *matHeaderCellDef>NUMJOBS </th>
-                <td mat-cell *matCellDef="let element"> {{element.NUMJOBS}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.NumJobs}} </td>
               </ng-container>
-              <ng-container matColumnDef="READ/WRITE">
+              <ng-container matColumnDef="ReadWrite">
                 <th mat-header-cell *matHeaderCellDef> READ/WRITE </th>
-                <td mat-cell *matCellDef="let element"> {{element['READ/WRITE']}} </td>
+                <td mat-cell *matCellDef="let element"> {{element['ReadWrite']}} </td>
               </ng-container>
-              <ng-container matColumnDef="RUNTIME">
+              <ng-container matColumnDef="RunTime">
                 <th mat-header-cell *matHeaderCellDef> RUNTIME </th>
-                <td mat-cell *matCellDef="let element"> {{element.RUNTIME}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.RunTime}} </td>
               </ng-container>
               <ng-container matColumnDef="RUN">
                 <th mat-header-cell *matHeaderCellDef> RUN </th>

@@ -42,16 +42,25 @@ export class DialogBodyJobComponent {
 
   submit(){
     this.loading = true;
+
+    // block_size: str
+    // io_depth: str
+    // run_time: str
+    // io_engine: str
+    // job_name: str
+    // disk_name: str
+    // num_jobs: int
+    // read_write: str
     
     var obj = {
-      BlockSize:this.blockSize,
-      IODepth:this.ioDepth,
-      RunTime:this.runTime,
-      IOEngine:this.ioEngine,
-      JobName:this.jobName,
-      DiskName:this.diskName,
-      NumJobs:this.numJobs,
-      ReadWrite:this.readWrite,
+      block_size:this.blockSize,
+      io_depth:this.ioDepth,
+      run_time:this.runTime,
+      io_engine:this.ioEngine,
+      job_name:this.jobName,
+      disk_name:this.diskName,
+      num_jobs:this.numJobs,
+      read_write:this.readWrite,
     }
     // console.log("branches add ",JSON.stringify(this.validbranchDataDistinct));
     // console.log("chains add ",JSON.stringify(this.validchainDataDistinct));
@@ -68,6 +77,7 @@ export class DialogBodyJobComponent {
     this.jobservice.addJob(obj)
     .subscribe(
       data => {
+        console.log(JSON.stringify(data));
         
         this.dataKey = true;
         this.openDialog();

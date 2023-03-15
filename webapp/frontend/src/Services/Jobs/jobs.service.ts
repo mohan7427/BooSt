@@ -44,6 +44,7 @@ export class JobsService {
   public addJob(job:any): Observable<any>{
     const headers = {"content-type":"application/json"}
     const body = JSON.stringify(job);
+    console.log(body);
     return this.httpClient.post<any>(properties.add_job,body,{"headers":headers})
     .pipe(
       retry(1),

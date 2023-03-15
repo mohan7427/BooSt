@@ -64,13 +64,15 @@ const ELEMENT_DATA: Job[] = [
   },
 ]
 
+//var val = [{"JobId":1,"RunTime":"12","JobName":"job1","NumJobs":12,"IOEngine":"rbd","BlockSize":"16","IODepth":"12","DiskName":"rbdxxxxxxx","ReadWrite":"Randread","RUN":"play_circle_filled","DELETE":"delete"}]
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  displayedColumns: string[] = ['POSITION','JOB NAME', 'I/O-ENGINE', 'DISKNAME','BLOCKSIZE','I/O-DEPTH','NUMJOBS','READ/WRITE','RUNTIME','RUN','DELETE'];
+  displayedColumns: string[] = ['POSITION','JobName', 'IOEngine', 'DiskName','BlockSize','IODepth','NumJobs','ReadWrite','RunTime','RUN','DELETE'];
   data: Job[] = [];
   dataLoaded = false;
 
@@ -80,19 +82,33 @@ export class HomeComponent {
 
   ngOnInit(){
 
-    var totdata = [];
+    var totdata:any = [];
+
+    console.log("home");
 
     this.jobService.getJobs().subscribe((d)=>{
+      console.log("rajat");
+      console.log(JSON.stringify(d));
       totdata = d;
+
+      totdata.forEach((d:any, index:any)=>{
+        d['POSITION'] = index;
+        d['RUN'] = 'play_circle_filled',
+        d['DELETE'] = 'delete'
+  
+        this.data.push(d);
+      })
+      console.log(JSON.stringify(this.data));
+      this.dataLoaded = true;
     })
 
-    ELEMENT_DATA.forEach((d)=>{
-      d['RUN'] = 'play_circle_filled',
-      d['DELETE'] = 'delete'
+    // ELEMENT_DATA.forEach((d)=>{
+    //   d['RUN'] = 'play_circle_filled',
+    //   d['DELETE'] = 'delete'
 
-      this.data.push(d);
-    })
-    this.dataLoaded = true;
+    //   this.data.push(d);
+    // })
+    
   }
 
   openDialog() {
