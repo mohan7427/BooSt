@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { JobsService } from 'src/Services/Jobs/jobs.service';
 import { DialogBodyJobComponent } from '../dialog-body-job/dialog-body-job.component';
 
-export interface PeriodicElement {
+export interface Job {
   'JOB NAME': string;
   'POSITION': number;
   'I/O-ENGINE': string;
@@ -16,7 +17,7 @@ export interface PeriodicElement {
   'DELETE'? : string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
+const ELEMENT_DATA: Job[] = [
   {
     'JOB NAME': 'job1',
     'POSITION': 1,
@@ -70,14 +71,21 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class HomeComponent {
   displayedColumns: string[] = ['POSITION','JOB NAME', 'I/O-ENGINE', 'DISKNAME','BLOCKSIZE','I/O-DEPTH','NUMJOBS','READ/WRITE','RUNTIME','RUN','DELETE'];
-  data: PeriodicElement[] = [];
+  data: Job[] = [];
   dataLoaded = false;
 
-  constructor(private matDialog: MatDialog){
+  constructor(private matDialog: MatDialog, public jobService:JobsService){
 
   }
 
   ngOnInit(){
+
+    var totdata = [];
+
+    this.jobService.getJobs().subscribe((d)=>{
+      totdata = d;
+    })
+
     ELEMENT_DATA.forEach((d)=>{
       d['RUN'] = 'play_circle_filled',
       d['DELETE'] = 'delete'
