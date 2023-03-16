@@ -1,0 +1,27 @@
+<div class="chart-wrapper" style="display: flex; justify-content: space-around;">
+    <canvas baseChart
+        [data]="barChartDataIops"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [type]="'bar'">
+    </canvas>
+
+    <canvas baseChart
+        [data]="barChartDataLat"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [type]="'bar'">
+    </canvas>
+    
+    <canvas baseChart
+        [data]="barChartDataBw"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [type]="'bar'">
+    </canvas>
+
+</div>
+

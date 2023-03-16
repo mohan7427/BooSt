@@ -87,6 +87,17 @@ export class JobsService {
     
   }
 
+  public getGraphData(): Observable<any> {
+    console.log("graphdata");
+
+    return this.httpClient.get<any>(properties.graph_data,{headers: this.httpOptions.headers})
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+
+
   handleError(error:any) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {
