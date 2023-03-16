@@ -120,9 +120,10 @@ def get_results(session: Session):
     data_updated['seq_randwrite_32']['bw']=seq_randwrite_bw
     data_updated['seq_randwrite_32']['iops']=seq_randwrite_iops
     data_updated['seq_randwrite_32']['latency']=seq_randwrite_lat_ns
-    js = json.dumps(data_updated, indent = 4)
-    print("JS\n\n"+js)
-    return js
+#    print(data_updated)
+#    js = json.dumps(data_updated, indent = 4)
+#    print("JS\n\n"+js)
+    return data_updated
 
 
 def create_job(session: Session, jobin: schemas.JobIn, background_tasks):
