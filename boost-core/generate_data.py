@@ -1,7 +1,7 @@
 import json #Convert dict to json package
 
 #load file containing raw data in json
-f = open('/root/storage/ui/json_data_mixed')
+f = open('/root/BooSt/boost-core/test.json')
 data = json.load(f)
 
 #Fetch desired data in dictionary
