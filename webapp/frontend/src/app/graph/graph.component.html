@@ -1,1 +1,5 @@
-<p>graph works!</p>
+<ng-container *ngFor="let dt of data1 | keyvalue">
+    <div style="margin-left: 3vw; font-size: larger;">{{dt.key}}</div>
+    <app-bar-chart [graphData]=dt></app-bar-chart>
+    <div><hr/></div>
+</ng-container>

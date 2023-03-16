@@ -60,6 +60,7 @@ export class DialogBodyJobComponent {
     this.jobservice.addJob(obj)
     .subscribe(
       data => {
+        console.log("rajat");
         console.log(JSON.stringify(data));
         
         this.dataKey = true;

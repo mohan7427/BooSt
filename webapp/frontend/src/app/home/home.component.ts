@@ -19,52 +19,52 @@ export interface Job {
   'DELETE'? : string;
 }
 
-const ELEMENT_DATA: Job[] = [
-  {
-    'JOB NAME': 'job1',
-    'POSITION': 1,
-    'I/O-ENGINE': 'rados',
-    'DISKNAME':'/dev/sdb:/dev/sdc',
-    'BLOCKSIZE':'16k',
-    'I/O-DEPTH':'32',
-    'NUMJOBS': 4,
-    'READ/WRITE': 'rwmixread-50',
-    'RUNTIME' : '20',
-  },
-  {
-    'JOB NAME': 'job1',
-    'POSITION': 1,
-    'I/O-ENGINE': 'rados',
-    'DISKNAME':'/dev/sdb:/dev/sdc',
-    'BLOCKSIZE':'16k',
-    'I/O-DEPTH':'32',
-    'NUMJOBS': 4,
-    'READ/WRITE': 'rwmixread-50',
-    'RUNTIME' : '20',
-  },
-  {
-    'JOB NAME': 'job1',
-    'POSITION': 1,
-    'I/O-ENGINE': 'rados',
-    'DISKNAME':'/dev/sdb:/dev/sdc',
-    'BLOCKSIZE':'16k',
-    'I/O-DEPTH':'32',
-    'NUMJOBS': 4,
-    'READ/WRITE': 'rwmixread-50',
-    'RUNTIME' : '20',
-  },
-  {
-    'JOB NAME': 'job1',
-    'POSITION': 1,
-    'I/O-ENGINE': 'rados',
-    'DISKNAME':'/dev/sdb:/dev/sdc',
-    'BLOCKSIZE':'16k',
-    'I/O-DEPTH':'32',
-    'NUMJOBS': 4,
-    'READ/WRITE': 'rwmixread-50',
-    'RUNTIME' : '20',
-  },
-]
+// const ELEMENT_DATA: Job[] = [
+//   {
+//     'JOB NAME': 'job1',
+//     'POSITION': 1,
+//     'I/O-ENGINE': 'rados',
+//     'DISKNAME':'/dev/sdb:/dev/sdc',
+//     'BLOCKSIZE':'16k',
+//     'I/O-DEPTH':'32',
+//     'NUMJOBS': 4,
+//     'READ/WRITE': 'rwmixread-50',
+//     'RUNTIME' : '20',
+//   },
+//   {
+//     'JOB NAME': 'job1',
+//     'POSITION': 1,
+//     'I/O-ENGINE': 'rados',
+//     'DISKNAME':'/dev/sdb:/dev/sdc',
+//     'BLOCKSIZE':'16k',
+//     'I/O-DEPTH':'32',
+//     'NUMJOBS': 4,
+//     'READ/WRITE': 'rwmixread-50',
+//     'RUNTIME' : '20',
+//   },
+//   {
+//     'JOB NAME': 'job1',
+//     'POSITION': 1,
+//     'I/O-ENGINE': 'rados',
+//     'DISKNAME':'/dev/sdb:/dev/sdc',
+//     'BLOCKSIZE':'16k',
+//     'I/O-DEPTH':'32',
+//     'NUMJOBS': 4,
+//     'READ/WRITE': 'rwmixread-50',
+//     'RUNTIME' : '20',
+//   },
+//   {
+//     'JOB NAME': 'job1',
+//     'POSITION': 1,
+//     'I/O-ENGINE': 'rados',
+//     'DISKNAME':'/dev/sdb:/dev/sdc',
+//     'BLOCKSIZE':'16k',
+//     'I/O-DEPTH':'32',
+//     'NUMJOBS': 4,
+//     'READ/WRITE': 'rwmixread-50',
+//     'RUNTIME' : '20',
+//   },
+// ]
 
 
 

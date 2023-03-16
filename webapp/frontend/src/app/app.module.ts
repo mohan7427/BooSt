@@ -18,6 +18,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogBodyComponent } from './dialog-body/dialog-body.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DialogDelJobComponent } from './dialog-del-job/dialog-del-job.component';
+import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { NgChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +29,8 @@ import { DialogDelJobComponent } from './dialog-del-job/dialog-del-job.component
     GraphComponent,
     DialogBodyJobComponent,
     DialogBodyComponent,
-    DialogDelJobComponent
+    DialogDelJobComponent,
+    BarChartComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,7 @@ import { DialogDelJobComponent } from './dialog-del-job/dialog-del-job.component
     FormsModule,
     MatDialogModule,
     HttpClientModule,
-
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
