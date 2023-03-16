@@ -5,4 +5,5 @@ export const properties = {
     add_job: server_domain + "/job",
     get_job: server_domain + "/job",
     del_job: server_domain + "/job",
+    run_job: server_domain + "/run",
 }

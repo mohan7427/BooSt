@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient , HttpHeaders} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { properties } from 'src/config/properties';
 import { Job } from 'src/Classes/job';
@@ -12,6 +12,8 @@ import { Job } from 'src/Classes/job';
   providedIn: 'root'
 })
 export class JobsService {
+
+  done: any = null;
   
   constructor(private httpClient: HttpClient) { }
 
@@ -21,6 +23,26 @@ export class JobsService {
       'X-Requested-With': 'XMLHttpRequest'
     })
   } 
+
+  // public setDone(){
+  //   this.done = true;
+  // }
+  // public setDoneFalse(){
+  //   this.done = false;
+  // }
+  // public getDone(){
+  //   return this.done
+  // }
+
+  public change : BehaviorSubject<any> = new BehaviorSubject(null);
+
+  getChange(): Observable<any> {
+      return this.change.asObservable();
+  }
+
+  setChange() {
+      this.change.next(true);
+  }
 
   public getJob(): Observable<Job> {
     console.log("getjob")
@@ -56,7 +78,18 @@ export class JobsService {
   public delJob(user:any): Observable<any>{
     const headers = {"content-type":"application/json"}
     const body = JSON.stringify(user);
-    return this.httpClient.post<any>(properties.del_job,body,{"headers":headers})
+    return this.httpClient.delete<any>(properties.del_job+"/"+user,{"headers":headers})
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+    
+  }
+
+  public runJob(job:any): Observable<any>{
+    const headers = {"content-type":"application/json"}
+    const body = JSON.stringify(job);
+    return this.httpClient.post<any>(properties.run_job,body,{"headers":headers})
     .pipe(
       retry(1),
       catchError(this.handleError)

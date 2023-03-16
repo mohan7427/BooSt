@@ -61,12 +61,12 @@
               </ng-container>
               <ng-container matColumnDef="RUN">
                 <th mat-header-cell *matHeaderCellDef> RUN </th>
-                <td mat-cell *matCellDef="let element"><button mat-icon-button  ><mat-icon >{{element.RUN}}</mat-icon></button></td>
+                <td mat-cell *matCellDef="let element"><button mat-icon-button (click)="runjob(element)" ><mat-icon >{{element.RUN}}</mat-icon></button></td>
               </ng-container>
     
               <ng-container matColumnDef="DELETE">
                 <th mat-header-cell *matHeaderCellDef> DELETE </th>
-                <td mat-cell *matCellDef="let element"><button mat-icon-button ><mat-icon >{{element.DELETE}}</mat-icon></button></td>
+                <td mat-cell *matCellDef="let element"><button mat-icon-button (click)="deletejob(element)"><mat-icon >{{element.DELETE}}</mat-icon></button></td>
               </ng-container>
           
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

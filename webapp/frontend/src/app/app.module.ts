@@ -17,7 +17,17 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogBodyComponent } from './dialog-body/dialog-body.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DialogDelJobComponent } from './dialog-del-job/dialog-del-job.component';
+// import { ChartjsModule } from '@coreui/angular-chartjs';
+// import { FusionChartsModule } from "angular-fusioncharts";
 
+// Import FusionCharts library and chart modules
+// import * as FusionCharts from "fusioncharts";
+// import * as charts from "fusioncharts/fusioncharts.charts";
+// import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
+
+// Pass the fusioncharts library and chart modules
+//FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +36,8 @@ import { HttpClientModule } from '@angular/common/http';
     FooterComponent,
     GraphComponent,
     DialogBodyJobComponent,
-    DialogBodyComponent
+    DialogBodyComponent,
+    DialogDelJobComponent
   ],
   imports: [
     BrowserModule,
@@ -38,9 +49,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatIconModule,
     FormsModule,
     MatDialogModule,
-    HttpClientModule
+    HttpClientModule,
+    // FusionChartsModule,
+    // ChartjsModule
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
   bootstrap: [AppComponent]
 })

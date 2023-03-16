@@ -20,7 +20,7 @@ export class DialogBodyJobComponent {
   numJobs: number=0;
   data = true;
   loading = false;
-  dataKey = true;
+  dataKey:any = null;
 
   constructor(public dialogRef: MatDialogRef<DialogBodyJobComponent>,private matDialog: MatDialog,private jobservice: JobsService){
     
@@ -34,7 +34,8 @@ export class DialogBodyJobComponent {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     let dialogRef = this.matDialog.open(DialogBodyComponent,  { disableClose: true, data: {
-      dataKey: this.dataKey
+      dataKey: this.dataKey,
+      drun: false
     } });
     
   }
@@ -80,6 +81,8 @@ export class DialogBodyJobComponent {
         console.log(JSON.stringify(data));
         
         this.dataKey = true;
+        this.jobservice.setChange();
+
         this.openDialog();
         alert("rajat");
         this.close()
