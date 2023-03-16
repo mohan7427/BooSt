@@ -50,7 +50,7 @@ Currently, this tool runs all the components on one machine. Storage to be teste
 - In GUI, go to Jobs and start `new Job`
 - Input all required parameters for the test
 - Start the test run and wait for its completion
-- Click the the `graphs` to check the results
+- Click the `graphs` to check the results
 - To download the graphs, use 'download graphs' button. PPT file will be downloaded.
 
 ### How to Test Openstack
