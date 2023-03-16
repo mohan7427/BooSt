@@ -44,6 +44,11 @@ async def add_job(jobin: schemas.JobIn, background_tasks: BackgroundTasks, sessi
     return storage_info
 
 
+@app.post("/run", status_code=status.HTTP_201_CREATED)
+async def run_job(jobin: schemas.RunIn, background_tasks: BackgroundTasks, session: Session = Depends(get_session)):
+    storage_info = crud.run_job(session, jobin, background_tasks)
+    return storage_info
+
 
 @app.delete("/job/{job_name}", status_code=status.HTTP_201_CREATED)
 async def del_job(job_name: str, background_tasks: BackgroundTasks, session: Session = Depends(get_session)):

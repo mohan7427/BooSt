@@ -16,3 +16,18 @@ class JobIn(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class RunIn(BaseModel):
+    JobId: int
+    RunTime: str
+    JobName: str
+    NumJobs: int
+    IOEngine: str
+    BlockSize: str
+    IODepth: str
+    DiskName: str
+    ReadWrite: str
+    POSITION: int
+    RUN: str
+    DELETE: str
