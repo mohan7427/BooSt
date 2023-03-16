@@ -27,7 +27,7 @@ export class DialogBodyJobComponent {
   }
 
   close() {
-    // alert(JSON.stringify(this.validbranchDataDistinct))
+
     this.dialogRef.close();
   }
 
@@ -44,14 +44,6 @@ export class DialogBodyJobComponent {
   submit(){
     this.loading = true;
 
-    // block_size: str
-    // io_depth: str
-    // run_time: str
-    // io_engine: str
-    // job_name: str
-    // disk_name: str
-    // num_jobs: int
-    // read_write: str
     
     var obj = {
       block_size:this.blockSize,
@@ -63,17 +55,7 @@ export class DialogBodyJobComponent {
       num_jobs:this.numJobs,
       read_write:this.readWrite,
     }
-    // console.log("branches add ",JSON.stringify(this.validbranchDataDistinct));
-    // console.log("chains add ",JSON.stringify(this.validchainDataDistinct));
-    // console.log("widgets add ",JSON.stringify(this.validwidgetDataDistinct));
-   
 
-    // console.log("branches add1 ",JSON.stringify(this.superbranchDataDistinct));
-    // console.log("chains add1 ",JSON.stringify(this.superchainDataDistinct));
-    // console.log("widgets add1 ",JSON.stringify(this.superwidgetDataDistinct));
-
-    // console.log("obj ",JSON.stringify(this.obj));
-   
 
     this.jobservice.addJob(obj)
     .subscribe(
@@ -86,21 +68,8 @@ export class DialogBodyJobComponent {
         this.openDialog();
         alert("rajat");
         this.close()
-        
-        /*if (JSON.stringify(this.validbranchDataDistinct[1]['brnch_status']) === 'true'){
-          window.sessionStorage.setItem("DEV","true")
-        }
-        else{
-          window.sessionStorage.setItem("DEV","false")
-        }
-        if (JSON.stringify(this.validbranchDataDistinct[0]['brnch_status']) === 'true'){
-          window.sessionStorage.setItem("TAG","true")
-        }
-        else{
-          window.sessionStorage.setItem("TAG","false")
-        }*/
+
         this.loading = false;
-    //     this.UserService.setDone();
         
       }
     )

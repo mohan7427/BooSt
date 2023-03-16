@@ -31,7 +31,6 @@ export class DialogDelJobComponent {
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    //console.log("datakey ",this.dataKey);
     let dialogRef = this.matDialog.open(DialogBodyComponent,  { disableClose: true, data: {
       dataKey: false,
       drun: true
@@ -50,7 +49,6 @@ export class DialogDelJobComponent {
         this.openDialog();
         this.close();
         this.loading = false;
-       // this.jobService.setDone();
       }
     )
     

@@ -24,16 +24,6 @@ export class JobsService {
     })
   } 
 
-  // public setDone(){
-  //   this.done = true;
-  // }
-  // public setDoneFalse(){
-  //   this.done = false;
-  // }
-  // public getDone(){
-  //   return this.done
-  // }
-
   public change : BehaviorSubject<any> = new BehaviorSubject(null);
 
   getChange(): Observable<any> {
@@ -100,13 +90,13 @@ export class JobsService {
   handleError(error:any) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {
-      // Get client-side error
+
       errorMessage = error.error.message;
     } else {
-      // Get server-side error
+
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    // console.log(errorMessage);
+
     return throwError(errorMessage);
  }
 }

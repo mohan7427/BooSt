@@ -66,7 +66,7 @@ const ELEMENT_DATA: Job[] = [
   },
 ]
 
-//var val = [{"JobId":1,"RunTime":"12","JobName":"job1","NumJobs":12,"IOEngine":"rbd","BlockSize":"16","IODepth":"12","DiskName":"rbdxxxxxxx","ReadWrite":"Randread","RUN":"play_circle_filled","DELETE":"delete"}]
+
 
 @Component({
   selector: 'app-home',
@@ -77,23 +77,16 @@ export class HomeComponent {
   displayedColumns: string[] = ['POSITION','JobName', 'IOEngine', 'DiskName','BlockSize','IODepth','NumJobs','ReadWrite','RunTime','RUN','DELETE'];
   data: Job[] = [];
   dataLoaded = false;
-  //dataKey = false;
+
   
 
   constructor(private matDialog: MatDialog, public jobService:JobsService,private changeDetectorRefs: ChangeDetectorRef){
-    //this.refresh();
+
   }
 
   ngOnInit(){
 
-    
 
-    // ELEMENT_DATA.forEach((d)=>{
-    //   d['RUN'] = 'play_circle_filled',
-    //   d['DELETE'] = 'delete'
-
-    //   this.data.push(d);
-    // })
     this.refresh();
     this.jobService.getChange().subscribe((d)=>{
       this.refresh();
@@ -101,24 +94,12 @@ export class HomeComponent {
     
   }
 
-  // ngDoCheck(): void {
-  //   console.log("check");
-  //   var d = this.jobService.getDone()
-  //   if (d === true){
-  //     this.data = [];
-  //     this.refresh();
-  //     this.jobService.setDoneFalse()
-  //   }
-  // }
+
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
      let dialogRef = this.matDialog.open(DialogBodyJobComponent,  { disableClose: true})
-     //.afterClosed().subscribe(result => {
-    //   console.log("rajat1")
-    //   console.log(JSON.stringify(result));
-    //   this.refresh();
-    //});
+
     
   }
 
@@ -165,7 +146,6 @@ export class HomeComponent {
       })
       console.log(JSON.stringify(this.data));
       this.dataLoaded = true;
-      //this.changeDetectorRefs.detectChanges();
     })
   }
 }
