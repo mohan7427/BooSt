@@ -5,11 +5,20 @@ from sqlalchemy.orm import Session
 from fastapi.responses import JSONResponse
 import crud, schemas
 from database import SessionLocal
-
+from starlette.middleware.cors import CORSMiddleware
 
 Base.metadata.create_all(engine)
 
 app = FastAPI()
+
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_session():
     session = SessionLocal()
