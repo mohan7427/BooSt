@@ -11,7 +11,7 @@ user_bs=sys.argv[4]
 runtime=sys.argv[5]
 bs=['1k','2k','4k','8k','16K','32k','64k','128k','256k','512k','1024k','2048k','4096k']
 rw=['read','write','randread','randwrite']
-fileoutput="new/test.json"
+fileoutput="test.json"
 
 def fio():
     os.system("rm -rf new/test.json")
