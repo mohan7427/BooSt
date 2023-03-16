@@ -27,6 +27,11 @@ def get_job_by_name(session: Session, job_name: str):
     return result
 
 
+def get_results(session: Session):
+    final_json = os.system("python3 generate_data.py")
+    return final_json
+
+
 def create_job(session: Session, jobin: schemas.JobIn, background_tasks):
     result = session.query(models.Boost).filter(models.Boost.JobName == jobin.job_name).first()
 

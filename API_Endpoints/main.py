@@ -38,6 +38,13 @@ def get_by_name(job_name: str, session: Session = Depends(get_session)):
     return storage_info
 
 
+@app.get("/results")
+def get_by_results(session: Session = Depends(get_session)):
+    storage_info = crud.get_results(session)
+    session.close()
+    return storage_info
+
+
 @app.post("/job", status_code=status.HTTP_201_CREATED)
 async def add_job(jobin: schemas.JobIn, background_tasks: BackgroundTasks, session: Session = Depends(get_session)):
     storage_info = crud.create_job(session, jobin, background_tasks)
