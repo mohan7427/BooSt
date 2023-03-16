@@ -79,26 +79,26 @@ def get_results(session: Session):
     for i in ui_data:
         if 'seq_read' in i:
             bs.append(ui_data[i]['bs'])
-            iops.append(ui_data[i]['iops'])
-            lat_ns.append(ui_data[i]['lat_ns']/1000000)
+            iops.append(round(ui_data[i]['iops']))
+            lat_ns.append(round((ui_data[i]['lat_ns']/1000000),2))
             iodepth.append(ui_data[i]['iodepth'])
-            bw.append(ui_data[i]['bw'])
+            bw.append(round((ui_data[i]['bw']/1024),2))
             job_name=i
         elif 'seq_write' in i:
             seq_write_bs.append(ui_data[i]['bs'])
-            seq_write_iops.append(ui_data[i]['iops'])
-            seq_write_lat_ns.append(ui_data[i]['lat_ns']/1000000)
-            seq_write_bw.append(ui_data[i]['bw'])
+            seq_write_iops.append(round(ui_data[i]['iops']))
+            seq_write_lat_ns.append(round((ui_data[i]['lat_ns']/1000000),2))
+            seq_write_bw.append(round((ui_data[i]['bw']/1024),2))
         elif 'seq_randread' in i:
             seq_randread_bs.append(ui_data[i]['bs'])
-            seq_randread_iops.append(ui_data[i]['iops'])
-            seq_randread_lat_ns.append(ui_data[i]['lat_ns']/1000000)
-            seq_randread_bw.append(ui_data[i]['bw'])
+            seq_randread_iops.append(round(ui_data[i]['iops']))
+            seq_randread_lat_ns.append(round((ui_data[i]['lat_ns']/1000000),2))
+            seq_randread_bw.append(round((ui_data[i]['bw']/1024),2))
         elif 'seq_randwrite' in i:
             seq_randwrite_bs.append(ui_data[i]['bs'])
-            seq_randwrite_iops.append(ui_data[i]['iops'])
-            seq_randwrite_lat_ns.append(ui_data[i]['lat_ns']/1000000)
-            seq_randwrite_bw.append(ui_data[i]['bw'])
+            seq_randwrite_iops.append(round(ui_data[i]['iops']))
+            seq_randwrite_lat_ns.append(round((ui_data[i]['lat_ns']/1000000),2))
+            seq_randwrite_bw.append(round((ui_data[i]['bw']/1024),2))
     data_updated={}
     data_updated['seq_read_32']={}
     data_updated['seq_read_32']['bs']=bs
@@ -120,9 +120,8 @@ def get_results(session: Session):
     data_updated['seq_randwrite_32']['bw']=seq_randwrite_bw
     data_updated['seq_randwrite_32']['iops']=seq_randwrite_iops
     data_updated['seq_randwrite_32']['latency']=seq_randwrite_lat_ns
-#    print(data_updated)
-#    js = json.dumps(data_updated, indent = 4)
-#    print("JS\n\n"+js)
+    # js = json.dumps(data_updated, indent = 4)
+    # print("JS\n\n"+js)
     return data_updated
 
 
