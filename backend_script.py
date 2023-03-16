@@ -1,13 +1,14 @@
 import os 
+import sys
 import itertools
 import subprocess
 import configparser
 
-iodepth=input("Enter io depth:")
-numjobs=input("Enter numjobs:")
-user_rw=input("Enter rw:")
-user_bs=input("Enter bs value:")
-runtime=input("Enter runtime:")
+iodepth=sys.argv[1]
+numjobs=sys.argv[2]
+user_rw=sys.argv[3]
+user_bs=sys.argv[4]
+runtime=sys.argv[5]
 bs=['1k','2k','4k','8k','16K','32k','64k','128k','256k','512k','1024k','2048k','4096k']
 rw=['read','write','randread','randwrite']
 fileoutput="new/test.json"
