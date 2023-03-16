@@ -1,0 +1,73 @@
+ <div style="margin: 2vh">
+       <div class="card" style="margin-bottom: 4%; border: 2px solid black;">
+         <h3 class="card-header" style="background-color: black; color: white;">Job Management</h3>
+         <div class="card-body">
+             <div>
+             <h2 style="align-items: center; margin-bottom: 5vh;">Jobs <button type="button" class="btn btn-primary"  style="float: right;" (click)="openDialog()">
+               Add Jobs &nbsp;<mat-icon>account_box</mat-icon></button></h2>
+           
+             <div class="spinner-border text-primary" role="status" [hidden]="dataLoaded" ></div>
+             <div *ngIf=dataLoaded >
+        
+          
+            <table mat-table [dataSource]="data" class="mat-elevation-z8">
+    
+           
+            <ng-container matColumnDef="POSITION">
+              <th mat-header-cell *matHeaderCellDef> No. </th>
+              <td mat-cell *matCellDef="let element"> {{element.POSITION}} </td>
+            </ng-container>
+          
+
+            <ng-container matColumnDef="JobName">
+              <th mat-header-cell *matHeaderCellDef> JOB Name </th>
+              <td mat-cell *matCellDef="let element"> {{element['JobName']}} </td>
+            </ng-container>
+          
+
+            <ng-container matColumnDef="IOEngine">
+              <th mat-header-cell *matHeaderCellDef> I/O-ENGINE </th>
+              <td mat-cell *matCellDef="let element"> {{element['IOEngine']}} </td>
+            </ng-container>
+          
+
+            <ng-container matColumnDef="DiskName">
+              <th mat-header-cell *matHeaderCellDef> DISKNAME </th>
+              <td mat-cell *matCellDef="let element"> {{element.DiskName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="BlockSize">
+                <th mat-header-cell *matHeaderCellDef> BLOCKSIZE </th>
+                <td mat-cell *matCellDef="let element"> {{element.BlockSize}} </td>
+            </ng-container>
+            <ng-container matColumnDef="IODepth">
+                <th mat-header-cell *matHeaderCellDef> I/O-DEPTH </th>
+                <td mat-cell *matCellDef="let element"> {{element['IODepth']}} </td>
+              </ng-container>
+              <ng-container matColumnDef="NumJobs">
+                <th mat-header-cell *matHeaderCellDef>NUMJOBS </th>
+                <td mat-cell *matCellDef="let element"> {{element.NumJobs}} </td>
+              </ng-container>
+              <ng-container matColumnDef="ReadWrite">
+                <th mat-header-cell *matHeaderCellDef> READ/WRITE </th>
+                <td mat-cell *matCellDef="let element"> {{element['ReadWrite']}} </td>
+              </ng-container>
+              <ng-container matColumnDef="RunTime">
+                <th mat-header-cell *matHeaderCellDef> RUNTIME </th>
+                <td mat-cell *matCellDef="let element"> {{element.RunTime}} </td>
+              </ng-container>
+              <ng-container matColumnDef="RUN">
+                <th mat-header-cell *matHeaderCellDef> RUN </th>
+                <td mat-cell *matCellDef="let element"><button mat-icon-button (click)="runjob(element)" ><mat-icon >{{element.RUN}}</mat-icon></button></td>
+              </ng-container>
+    
+              <ng-container matColumnDef="DELETE">
+                <th mat-header-cell *matHeaderCellDef> DELETE </th>
+                <td mat-cell *matCellDef="let element"><button mat-icon-button (click)="deletejob(element)"><mat-icon >{{element.DELETE}}</mat-icon></button></td>
+              </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+      
+      </div>
+        </div>
