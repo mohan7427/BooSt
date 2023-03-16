@@ -169,4 +169,4 @@ elif (user_bs and user_rw)!='all':
     ini()
 
 fio()
-#test=os.system("rm -rf master.fio")
+test=os.system("rm -rf master.fio")
