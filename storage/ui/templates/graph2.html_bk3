@@ -1,0 +1,189 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% block graph2 %}
+
+<br><br><br>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<body>
+
+<h1 style="position: relative; left: 320px;">Sequential Read</h1>
+
+<canvas id="myChart1" class="relative_left" style="width:100%;max-width:600px; position: relative; left: 320px; display:inline; "></canvas>
+
+<script>
+var yValues = {{ seq_read_iops }};
+var xValues = {{ seq_read_bs|safe }};
+var barColors = {{ get_colors|safe }};
+
+new Chart("myChart1", {
+  type: "bar",
+  axisX:{
+        title: "labels at 45 deg",
+        labelAngle: 45
+      },
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+
+    scales: {
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'IOPS'
+        }
+      }],
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Block Size'
+        }
+      }]
+    },
+
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "{{ job_name }}"
+    }
+  }
+});
+</script>
+
+
+
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<body>
+<canvas id="myChart2" style="width:100%;max-width:600px; position: relative; left: 320px; display:inline;"></canvas>
+
+
+<script>
+var xValues = {{ seq_read_bs|safe }};
+new Chart("myChart2", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{ 
+      data: {{ seq_read_iops }},
+      borderColor: "red",
+      fill: false
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Latency(ms)'
+        }
+      }],
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Block Size'
+        }
+      }]
+    },
+    legend: {display: false}
+  }
+});
+</script>
+
+
+<br><br><br><br>
+
+<h1 style="position: relative; left: 320px;">Sequential Write</h1>
+
+<canvas id="myChart_seq_write" class="relative_left" style="width:100%;max-width:600px; position: relative; left: 320px; display:inline; "></canvas>
+
+<script>
+var yValues = {{ seq_write_iops }};
+var xValues = {{ seq_write_bs|safe }};
+var barColors = {{ get_colors|safe }};
+
+new Chart("myChart_seq_write", {
+  type: "bar",
+  axisX:{
+        title: "labels at 45 deg",
+        labelAngle: 45
+      },
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+
+    scales: {
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'IOPS'
+        }
+      }],
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Block Size'
+        }
+      }]
+    },
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "{{ job_name }}"
+    }
+  }
+});
+</script>
+
+<canvas id="myChart_seq_write_latency" style="width:100%;max-width:600px; position: relative; left: 320px; display:inline;"></canvas>
+
+<script>
+var xValues = {{ seq_write_bs|safe }};
+new Chart("myChart_seq_write_latency", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      data: {{ seq_write_iops }},
+      borderColor: "red",
+      fill: false
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Latency(ms)'
+        }
+      }],
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Block Size'
+        }
+      }]
+    },
+    legend: {display: false}
+  }
+});
+</script>
+
+
+
+</body>
+
+
+{% endblock graph2 %}

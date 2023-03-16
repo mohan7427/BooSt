@@ -1,0 +1,10 @@
+[global]
+iodepth=32
+direct=1
+ioengine=libaio
+group_reporting
+time_based
+name=seq
+log_avg_msec=1000
+bwavgtime=1000
+filename=/dev/sdb:/dev/sdc

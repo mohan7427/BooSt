@@ -1,0 +1,223 @@
+/* Nav bar vertical margin */
+.nav_bar_margin {
+  margin-left: -18px;
+}
+
+/* Fixed sidenav, full height */
+.sidenav {
+  height: 100%;
+  width: 230px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  overflow-x: hidden;
+  padding-top: 50px;
+}
+
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  border: none;
+  background: none;
+  width:100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+.nav_bottom {
+  position: fixed;
+  width: 100%;
+  z-index :1;
+  bottom: 0;
+}
+
+.raas_theme {
+  color:#000 !important;
+  background-color:#f5f7f8 !important;
+}
+
+.top_raas {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  top: 0;
+  margin-left: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.bar_raas {
+  width: 100%;
+  overflow: hidden;
+  display: inline-block;
+  width: auto;
+  padding: 8px 16px;
+  float: left;
+  width: auto;
+  border: none;
+  display: block;
+  outline: 0;
+  position: static;
+  float: left;
+  white-space: normal;
+}
+
+.bar_raasi:before,.bar_raas:after {
+  content: "";
+  display: table;
+  clear: both
+}
+
+.raas_black {
+  color:#fff !important;
+  background-color:#000000 !important
+}
+
+.raas_orange {
+  color:#fff !important;
+  background-color:#FFA500 !important
+}
+
+.raas_left_align {
+  text-align: left!important;
+}
+
+.raas_large {
+  font-size: 18px!important;
+}
+
+.raas_bar_item {
+  padding: 8px 16px;
+  float: left;
+  width: auto;
+  border: none;
+  display: block;
+  outline: 0
+}
+
+.raas_bar_item {
+  width: 100%;
+  display: block;
+  padding: 8px 16px;
+  text-align: left;
+  border: none;
+  white-space: normal;
+  float: none;
+  outline: 0
+}
+
+.raas_bar_item {
+  text-align: center
+}
+
+.raas_button {
+  border: none;
+  display: inline-block;
+  padding: 8px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  background-color: inherit;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap
+}
+
+.raas_button {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.raas_button {
+  white-space: normal;
+  width: 100%;
+}
+
+.raas_hide_medium {
+  display: none!important;
+}
+
+.raas_hide_large {
+  display:none!important;
+}
+
+.raas_right {
+  float:right!important;
+}
+
+.raas_padding_large {
+  padding: 12px 24px!important;
+}
+
+.raas_hover_white:hover {
+  color: #000!important;
+  background-color:#fff!important;
+}
+
+.raas_theme_d2
+  {color: #fff !important;
+  background-color: #4d636f !important;
+}
+
+.raas_bars:before {
+  content: "\f0c9";
+}
+
+.raas_fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.raas_circle {
+  border-radius: 50%;
+}
+
+.raas_hide_small {
+  display: none!important;
+}
+
+.raas_badge {
+  background-color: #000;
+  color: #fff;
+  display: inline-block;
+  padding-left: 8px;
+  padding-right: 8px;
+  text-align: center;
+  border-radius: 50%;
+}
+
+.raas_small {
+  font-size: 12px!important;
+}
+
+.raas_green {
+  color: #fff!important;
+  background-color: #4CAF50!important
+}
+
+.img_icon{
+        position: relative;
+        height: 60px;
+        width: 60px;
+}
+
+i {
+  font-style: normal;
+}
+

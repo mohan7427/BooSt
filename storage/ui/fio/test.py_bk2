@@ -1,0 +1,23 @@
+import argparse
+
+CLI=argparse.ArgumentParser()
+CLI.add_argument(
+  "--list_bs",
+  nargs="*",
+  type=str,
+  default=['4k', '8k', '16k'],
+)
+
+args = CLI.parse_args()
+
+bs_list=['4k','8k','16k','32k']
+bs_list=args.list_bs
+data="\n\n[seq_rd_qd_32_4k] \nstonewall \nbs=4k \niodepth=32 \nnumjobs=4 \nrw=read \nruntime=60 \nwrite_bw_log=seq_read_bw.log"
+
+print("BS",bs_list)
+with open('template', 'a+') as f:
+    for bs in bs_list:
+        data=f"\n\n[seq_rd_qd_32_{bs}] \nstonewall \nbs={bs} \niodepth=32 \nnumjobs=4 \nrw=read \nruntime=60 \nwrite_bw_log=seq_read_bw.log\n\n[seq_rd_qd_32_{bs}] \nstonewall \nbs={bs} \niodepth=32 \nnumjobs=4 \nrw=write \nruntime=60 \nwrite_bw_log=seq_write_bw.log\n\n[seq_rd_qd_32_{bs}] \nstonewall \nbs={bs} \niodepth=32 \nnumjobs=4 \nrw=randread \nruntime=60 \nwrite_bw_log=rand_rd_bw.log\n\n[seq_rd_qd_32_{bs}] \nstonewall \nbs={bs} \niodepth=32 \nnumjobs=4 \nrw=randwrite \nruntime=60 \nwrite_bw_log=rand_rd_bw.log"
+        f.write(data)
+
+

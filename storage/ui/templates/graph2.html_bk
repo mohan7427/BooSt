@@ -1,0 +1,235 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% block graph2 %}
+
+<br><br><br>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<body>
+
+<canvas id="myChart" class="relative_left" style="width:100%;max-width:600px; position: relative; left: 320px; "></canvas>
+
+<script>
+var xValues = ['4k','8k','16k','32k'];
+var yValues = [55, 49, 44, 24];
+var barColors = ["red", "green","blue","orange",];
+
+new Chart("myChart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "Read Write for 70%"
+    }
+  }
+});
+</script>
+
+
+<p id="dd" style="position: relative; left: 320px;">ii{{ job_name }}</p>
+<canvas id="myChart1" class="relative_left" style="width:100%;max-width:600px; position: relative; left: 320px;"></canvas>
+<br><br>
+
+<script>
+//var xValues = ['4k','8k','16k','32k'];
+//var xValues = {{ seq_read_bs }};
+//var xValues = [739736.155203, 660728.418399, 547845.350052, 390095.238095, 254508.737864, 136533.333333, 78580.335731, 40857.855362, 17808.695652, 8904.347826, 4481.400438, 2265.486726, 1011.857708];
+//var xValues = document.getElementsById("dd");
+//var yValues = [55, 49, 44, 24];
+var yValues = {{ seq_read_iops }};
+//var xValues = ['1k', '2k', '4k', '8k', '16K', '32k', '64k', '128k', '256k', '512k', '1024k', '2048k', '4096k'];
+var xValues = {{ seq_read_bs|safe }};
+//var barColors = ["red", "green","blue","orange",];
+var barColors = {{ get_colors|safe }};
+
+new Chart("myChart1", {
+  type: "bar",
+  axisX:{
+        title: "labels at 45 deg",
+        labelAngle: 45
+      },
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+
+    scales: {
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'IOPS'
+        }
+      }],
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Block Size'
+        }
+      }]
+    },
+
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "{{ job_name }}"
+    }
+  }
+});
+</script>
+
+
+
+<div id="container" style="width: 75%; ">
+  <canvas id="canvas" style="position: relative; left: 320px; display:inline;"></canvas>
+</div>
+
+<script>
+var a = "{{ data_json.cpu_user }}";
+var c = [31.289, 6.4935, 2.5478, 2.5413, 3.944, 9.8985];
+var l = [3, 5, 6, 7,3, 5,];
+var barChartData = {
+  labels: [
+    "Absence of OB",
+    "Closeness",
+    "Credibility",
+    "Heritage",
+    "M Disclosure",
+    "Provenance",
+    "Reliability",
+    "Transparency"
+  ],
+  datasets: [
+    {
+      label: "American Express",
+      backgroundColor: "pink",
+      borderColor: "red",
+      borderWidth: 1,
+      data: [3, 5, 6, 7,3, 5,]
+    },
+    {
+      label: "Mastercard",
+      backgroundColor: "lightblue",
+      borderColor: "blue",
+      borderWidth: 1,
+      data: [4, 7, 3, 6, 10,7]
+    },
+    {
+      label: "Paypal",
+      backgroundColor: "lightgreen",
+      borderColor: "green",
+      borderWidth: 1,
+      data: [10,7,4,6,9,7]
+    },
+    {
+      label: "Visa",
+      backgroundColor: "yellow",
+      borderColor: "orange",
+      borderWidth: 1,
+      data: [6,9,7,3,10,7]
+    }
+  ]
+};
+
+//var data1 = {{ data_json|safe }};
+//document.getElementById("p1").innerHTML = data_1;
+
+var chartOptions = {
+  responsive: true,
+  legend: {
+    position: "top"
+  },
+  title: {
+    display: true,
+    text: "Chart.js Bar Chart"
+  },
+  scales: {
+    yAxes: [{
+      ticks: {
+        beginAtZero: true
+      }
+    }]
+  }
+}
+
+window.onload = function() {
+  var ctx = document.getElementById("canvas").getContext("2d");
+  window.myBar = new Chart(ctx, {
+    type: "bar",
+    data: barChartData,
+    options: chartOptions
+  });
+};
+
+</script>
+
+<p id="p1" style="position: relative; left: 320px; display:inline;">Hello World!aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+
+<p id="p2" style="position: relative; left: 320px; display:inline;">NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN{{ data_json.timestamp }}</p>
+<script>
+var a = "{{ data_json.cpu_user }}";
+var c = "{{ data_json.cpu_user }}";
+var b = "ccccccccccccccccccccccccccccccccc";
+document.getElementById("p1").innerHTML = c;
+document.getElementById("p2").innerHTML = c;
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<body>
+<canvas id="myChart2" style="width:100%;max-width:600px; position: relative; left: 320px; display:inline;"></canvas>
+
+<script>
+var xValues = [100,200,300,400,500,600,700,800,900,1000];
+
+new Chart("myChart2", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{ 
+      data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
+      borderColor: "red",
+      fill: false
+    }, { 
+      data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
+      borderColor: "green",
+      fill: false
+    }, { 
+      data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
+      borderColor: "blue",
+      fill: false
+    }]
+  },
+  options: {
+    legend: {display: false}
+  }
+});
+</script>
+
+
+<br><br>
+<p>Data</p>
+<p>{{ js }}<p>
+
+{% for job_name, values in js.items %}
+{% for data, key in values.items %}
+<p class="relative_left" style="position: relative; left: 320px;">{{ job_name }}<br>{{ data }}<br>{{ key }}<br><br></p>
+{% endfor %}
+{% endfor %}
+
+<p class="relative_left" style="position: relative; left: 320px;">IOPS{{ seq_read_iops }}</p>
+<p class="relative_left" style="position: relative; left: 320px;">seq_read_bs{{ seq_read_bs }}</p>
+</body>
+
+
+{% endblock graph2 %}
