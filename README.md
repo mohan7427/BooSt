@@ -42,16 +42,19 @@ Currently, this tool runs all the components on one machine. Storage to be teste
 
 ### How to run the test
 
-- Prepare test machine
-- Prepare target machine and attach storage disks
+- Prepare test machine on openstack
+- Attach storage disks
 - Clone the code from GitHub on test machine
-- Install boost on test machine
-- Open GUI on test machine
-- In GUI, go to Jobs and start `new Job`
+  git clone `https://github.com/mohan7427/BooSt.git`
+- Go to BooSt folder
+- Provide execution permission to `install.sh` by command `chmod +x install.sh`
+- Install boost by running `./install.sh`
+- Open GUI on test machine. By default at `http://machineIP:4200`
+- In GUI, go to Jobs and start `Add Jobs`
 - Input all required parameters for the test
 - Start the test run and wait for its completion
-- Click the `graphs` to check the results
-- To download the graphs, use 'download graphs' button. PPT file will be downloaded.
+- Click the `Graphs` to check the results
+
 
 ### How to Test Openstack
 Resource creation i.e virtual machine should be done prior to using the tools.
