@@ -61,6 +61,7 @@ def ini_count():
     #read config file into object
     config.read("master.fio")
 
+
     for i in itertools.product(rw,bs):
     #Add new section 
         config["global"]={
@@ -157,15 +158,15 @@ def ini_count_rw_all():
 
 
 
-if (user_bs)=='all' and (user_rw)=='all': 
+if (user_bs)=='All' and (user_rw)=='All': 
     ini_count()
-elif (user_rw)=='all' and (user_bs)!='all':
+elif (user_rw)=='All' and (user_bs)!='All':
     bs=user_bs
     ini_count_rw_all()
-elif (user_rw)!='all' and (user_bs)=='all':
+elif (user_rw)!='All' and (user_bs)=='All':
     rw=user_rw
     ini_count_bs_all()
-elif (user_bs and user_rw)!='all':
+elif (user_bs and user_rw)!='All':
     ini()
 
 fio()

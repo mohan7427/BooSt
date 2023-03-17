@@ -140,9 +140,10 @@ def create_job(session: Session, jobin: schemas.JobIn, background_tasks):
 
 
 def run_job(session: Session, jobin: schemas.RunIn, background_tasks):
+#    a = "python3 backend_script.py {} {} {} {} {}".format(jobin.IODepth, jobin.NumJobs, jobin.ReadWrite,jobin.BlockSize, jobin.RunTime)
+#    print (a)
     os.system("python3 backend_script.py {} {} {} {} {}".format(jobin.IODepth, jobin.NumJobs, jobin.ReadWrite, jobin.BlockSize, jobin.RunTime))
-#    command = "python3 backend_script.py jobin.IODepth jobin.NumJobs jobin.ReadWrite jobin.BlockSize jobin.RunTime"
-    return "Noted you jobId"
+    return "Noted"
 
 
 def delete_job(session: Session, job_name: str, background_tasks):

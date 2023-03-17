@@ -55,13 +55,13 @@ def get_by_results(session: Session = Depends(get_session)):
 
 
 @app.post("/job", status_code=status.HTTP_201_CREATED)
-async def add_job(jobin: schemas.JobIn, background_tasks: BackgroundTasks, session: Session = Depends(get_session)):
+def add_job(jobin: schemas.JobIn, background_tasks: BackgroundTasks, session: Session = Depends(get_session)):
     storage_info = crud.create_job(session, jobin, background_tasks)
     return storage_info
 
 
 @app.post("/run", status_code=status.HTTP_201_CREATED)
-async def run_job(jobin: schemas.RunIn, background_tasks: BackgroundTasks, session: Session = Depends(get_session)):
+def run_job(jobin: schemas.RunIn, background_tasks: BackgroundTasks, session: Session = Depends(get_session)):
     storage_info = crud.run_job(session, jobin, background_tasks)
     return storage_info
 

@@ -67,7 +67,6 @@ export class DialogBodyJobComponent {
         this.jobservice.setChange();
 
         this.openDialog();
-        alert("rajat");
         this.close()
 
         this.loading = false;
