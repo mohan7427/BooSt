@@ -1,0 +1,28 @@
+version: '1.0'
+services:
+  frontend:
+    build:
+      context: ./webapp/frontend/Dockerfile
+      dockerfile: Dockerfile
+      image: my-frontend-image
+    ports:
+      - 8000:80
+    container_name: my-frontend-container
+
+  backend:
+    build:
+      context: ./boost-core
+      dockerfile: Dockerfile
+      image: my-backend-image
+    ports:
+      - 5000:5000
+    container_name: my-backend-container
+
+  database:
+    build:
+      context: ./boost-core/mysqldb
+      dockerfile: Dockerfile
+      image: my-database-image
+    ports:
+      - 3306:3306
+    container_name: my-database-container

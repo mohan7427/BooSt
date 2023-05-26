@@ -1,4 +1,5 @@
-const server_domain = "http://10.239.57.221:8000";
+//const server_domain = "http://10.239.57.221:8000";
+const server_domain = "http://localhost:5000";
 
 export const properties = {
     get_jobs: server_domain + "/jobs",
